@@ -684,13 +684,12 @@ ORDER BY 3 DESC
 def get_dash1(_connector) -> pd.DataFrame:
 ##Credits used (past N days/weeks/months)
     cmd = '''
-SHOW warehouses;
-SELECT "name",ROUND(SUM(CREDITS_USED_COMPUTE),2) AS CREDITS_USED_COMPUTE_SUM
-FROM TABLE(RESULT_SCAN(LAST_QUERY_ID())) join ACCOUNT_USAGE.WAREHOUSE_METERING_HISTORY on "name"=WAREHOUSE_NAME
-group by "name"
-order by 2 desc
-;
-'''
+SELECT TOP 5
+WAREHOUSE_NAME 
+      ,ROUND(SUM(CREDITS_USED_COMPUTE),2) AS CREDITS_USED_COMPUTE_SUM
+  FROM ACCOUNT_USAGE.WAREHOUSE_METERING_HISTORY
+ GROUP BY 1
+ ORDER BY 2 DESC;'''
     return pd.read_sql(cmd, _connector)
 
 def get_dash2(_connector) -> pd.DataFrame:
