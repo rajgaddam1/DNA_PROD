@@ -1,10 +1,10 @@
 import cv2
 import pandas as pd
 
-# Read annotations file
+Read annotations file
 df = pd.read_csv('annotations.csv')
 
-# Loop through rows in the annotations file
+Loop through rows in the annotations file
 for index, row in df.iterrows():
     # Load image
     img = cv2.imread(row['image_path'])
